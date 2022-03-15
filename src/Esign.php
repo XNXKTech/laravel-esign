@@ -87,7 +87,7 @@ class Esign extends Container
     {
         $config = new Foundation\Config($config);
 
-        $keys = ['appId', 'appKey'];
+        $keys = ['appId', 'secret'];
         foreach ($keys as $key) {
             !$config->has($key) || $config[$key] = '***' . substr($config[$key], -5);
         }
@@ -140,7 +140,7 @@ class Esign extends Container
         $this['access_token'] = function () {
             return new AccessToken(
                 $this['config']['appId'],
-                $this['config']['appKey'],
+                $this['config']['secret'],
                 $this['cache']
             );
         };
