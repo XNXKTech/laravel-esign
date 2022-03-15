@@ -6,26 +6,28 @@ namespace XNXK\LaravelEsign;
 
 class ServiceProvider extends \Illuminate\Support\ServiceProvider
 {
-    protected $defer = true;
+    protected bool $defer = true;
 
     public function register(): void
     {
-        $this->app->singleton(Esign::class, static function () {
-            return new Esign(config('esign'));
+        $this->mergeConfigFrom(
+            __DIR__.'/../config/esign.php',
+            'esign'
+        );
+
+        $config = config('esign');
+
+        $this->app->bind(Esign::class, function () use ($config) {
+            return new Esign($config);
         });
 
         $this->app->alias(Esign::class, 'esign');
     }
 
-    public function provides()
-    {
-        return [Esign::class, 'esign'];
-    }
-
     public function boot(): void
     {
         $this->publishes([
-            __DIR__ . '/config.php' => config_path('esign.php'),
-        ]);
+            __DIR__.'/../config/esign.php' => config_path('esign.php'),
+        ], 'config');
     }
 }
