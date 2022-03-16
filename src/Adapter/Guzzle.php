@@ -22,11 +22,11 @@ class Guzzle implements Adapter
         if ($baseURI === null) {
             $baseURI = 'https://smlopenapi.esign.cn/';
         }
-        
+
         $this->auth = $auth;
 
         $this->client = new Client([
-            'base_uri' => $baseURI
+            'base_uri' => $baseURI,
         ]);
     }
 
@@ -79,7 +79,6 @@ class Guzzle implements Adapter
             throw new \InvalidArgumentException('Request method must be get, post, put, patch, or delete');
         }
 
-        
         try {
             $response = $this->client->$method($uri, [
                 'headers' => $this->auth->getHeaders($method, $uri, $data, $headers),
