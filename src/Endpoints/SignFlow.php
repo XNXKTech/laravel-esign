@@ -10,7 +10,7 @@ use XNXK\LaravelEsign\Traits\BodyAccessorTrait;
 class SignFlow implements API
 {
     use BodyAccessorTrait;
-    
+
     // Api URL
     public const CREATE_FLOW_NOE_STEP = '/api/v2/signflows/createFlowOneStep';         // 一步发起签署
     public const CREATE_SIGN_PROCESS = '/v1/signflows';                                // 签署流程创建
@@ -31,7 +31,7 @@ class SignFlow implements API
     {
         $this->adapter = $adapter;
     }
-    
+
     /**
      * 一步发起签署.
      *
@@ -141,7 +141,7 @@ class SignFlow implements API
         $params = [
             'signfields' => $signFields,
         ];
-        
+
         $response = $this->adapter->post($url, $params);
 
         $this->body = json_decode((string) $response->getBody());
@@ -177,7 +177,7 @@ class SignFlow implements API
     public function startSignFlow(string $flowId)
     {
         $url = sprintf(self::SIGN_PROCESS_START, $flowId);
-        
+
         $response = $this->adapter->put($url);
 
         $this->body = json_decode((string) $response->getBody());
@@ -203,7 +203,7 @@ class SignFlow implements API
             'urlType' => $urlType,
             'appScheme' => $appScheme,
         ];
-        
+
         $response = $this->adapter->get($url, $params);
 
         $this->body = json_decode((string) $response->getBody());
@@ -219,7 +219,7 @@ class SignFlow implements API
     public function archiveSign(string $flowId)
     {
         $url = sprintf(self::SIGN_PROCESS_ARCHIVE, $flowId);
-        
+
         $response = $this->adapter->put($url);
 
         $this->body = json_decode((string) $response->getBody());
@@ -235,7 +235,7 @@ class SignFlow implements API
     public function downloadDocument(string $flowId)
     {
         $url = sprintf(self::SIGN_PROCESS_DOCUMENT, $flowId);
-        
+
         $response = $this->adapter->get($url);
 
         $this->body = json_decode((string) $response->getBody());
@@ -251,7 +251,7 @@ class SignFlow implements API
     public function revoke(string $flowId)
     {
         $url = sprintf(self::SIGN_REVOKE, $flowId);
-        
+
         $response = $this->adapter->put($url);
 
         $this->body = json_decode((string) $response->getBody());
@@ -267,7 +267,7 @@ class SignFlow implements API
     public function getSignFlowStatus(string $flowId)
     {
         $url = sprintf(self::SIGN_PROCESS_STATUS, $flowId);
-        
+
         $response = $this->adapter->get($url);
 
         $this->body = json_decode((string) $response->getBody());

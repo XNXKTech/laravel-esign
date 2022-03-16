@@ -10,7 +10,7 @@ use XNXK\LaravelEsign\Traits\BodyAccessorTrait;
 class Identity implements API
 {
     use BodyAccessorTrait;
-    
+
     // API URL
     public const ORG_IDENTITY_URL = '/v2/identity/auth/web/%s/orgIdentityUrl';                                    // 获取组织机构实名认证地址
     public const CHECK_BANK_CARD_4FACTORS = '/v2/identity/auth/api/individual/bankCard4Factors';                  // 银行卡4要素核身校验

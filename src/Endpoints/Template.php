@@ -10,7 +10,7 @@ use XNXK\LaravelEsign\Traits\BodyAccessorTrait;
 class Template implements API
 {
     use BodyAccessorTrait;
-    
+
     // API URL
     public const CREATE_PERSONAL_TEMPLATE = '/v1/accounts/%s/seals/personaltemplate';          // 创建个人模板印章
     public const CREATE_OFFICIAL_TEMPLATE = '/v1/organizations/%s/seals/officialtemplate';     // 创建机构模板印章
@@ -130,7 +130,7 @@ class Template implements API
     public function setAccountDefaultTemplate(string $accountId, string $sealId = '')
     {
         $url = sprintf(self::SET_ACCOUNT_DEFAULT_TEMPLATE, $accountId, $sealId);
-        
+
         $response = $this->adapter->put($url);
 
         $this->body = json_decode((string) $response->getBody());
@@ -147,7 +147,7 @@ class Template implements API
     public function setOrgDefaultTemplate(string $orgId, string $sealId = '')
     {
         $url = sprintf(self::SET_ORG_DEFAULT_TEMPLATE, $orgId, $sealId);
-        
+
         $response = $this->adapter->put($url);
 
         $this->body = json_decode((string) $response->getBody());
@@ -191,7 +191,7 @@ class Template implements API
             'offset' => $offset,
             'size' => $size,
         ];
-        
+
         $response = $this->adapter->get($url, $params);
 
         $this->body = json_decode((string) $response->getBody());
@@ -208,7 +208,7 @@ class Template implements API
     public function deletePersonalTemplate(string $accountId, string $sealId)
     {
         $url = sprintf(self::DEL_ACCOUNT_TEMPLATE, $accountId, $sealId);
-        
+
         $response = $this->adapter->delete($url);
 
         $this->body = json_decode((string) $response->getBody());
@@ -225,7 +225,7 @@ class Template implements API
     public function deleteOfficialTemplate(string $orgId, string $sealId)
     {
         $url = sprintf(self::DEL_ORG_TEMPLATE, $orgId, $sealId);
-        
+
         $response = $this->adapter->delete($url);
 
         $this->body = json_decode((string) $response->getBody());

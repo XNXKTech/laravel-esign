@@ -10,7 +10,7 @@ use XNXK\LaravelEsign\Traits\BodyAccessorTrait;
 class File implements API
 {
     use BodyAccessorTrait;
-    
+
     // Api URL
     public const CREATE_SIGN_DOCUMENT = '/v1/files/getUploadUrl';                          // 通过上传方式创建文件
     public const CREATE_UPLOAD_URL = '/v1/docTemplates/createByUploadUrl';                 // 通过上传方式创建模板
@@ -46,7 +46,7 @@ class File implements API
             'fileName' => $fileName,
             'fileSize' => $fileSize,
         ];
-        
+
         $response = $this->adapter->post(self::CREATE_SIGN_DOCUMENT, $params);
 
         $this->body = json_decode((string) $response->getBody());
@@ -91,7 +91,7 @@ class File implements API
             'convert2Pdf' => $convert2Pdf,
             'fileName' => $fileName,
         ];
-        
+
         $response = $this->adapter->post(self::CREATE_UPLOAD_URL, $params);
 
         $this->body = json_decode((string) $response->getBody());
@@ -177,7 +177,7 @@ class File implements API
                 ],
             ],
         ];
-        
+
         $response = $this->adapter->post($url, $params);
 
         $this->body = json_decode((string) $response->getBody());
@@ -194,7 +194,7 @@ class File implements API
     public function deleteInputOptions(string $templateId, string $ids)
     {
         $url = sprintf(self::DEL_DOC_TEMPLATES, $templateId, $ids);
-        
+
         $response = $this->adapter->delete($url);
 
         $this->body = json_decode((string) $response->getBody());
@@ -248,7 +248,7 @@ class File implements API
     public function downloadFile(string $fileId)
     {
         $url = sprintf(self::QUERY_FILE, $fileId);
-        
+
         $response = $this->adapter->get($url);
 
         $this->body = json_decode((string) $response->getBody());

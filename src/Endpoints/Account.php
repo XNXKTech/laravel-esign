@@ -36,7 +36,6 @@ class Account implements API
      * 查询个人账户（按照第三方用户ID查询）.
      *
      * @param  string  $thirdId  第三方平台的用户id
-     *
      */
     public function queryPersonalAccountByThirdId(string $thirdId)
     {
@@ -89,7 +88,6 @@ class Account implements API
      * @param  null  $name  姓名，默认不变
      * @param  null  $idType  证件类型，默认为身份证
      * @param  null  $idNumber  证件号，该字段只有为空才允许修改
-     *
      */
     public function updatePersonalAccountById(string $accountId, $mobile = null, $idNumber = null, $name = null, $idType = null, $email = null)
     {
@@ -118,7 +116,6 @@ class Account implements API
      * @param  null  $name  姓名，默认不变
      * @param  null  $idType  证件类型，默认为身份证
      * @param  null  $idNumber  证件号，该字段只有为空才允许修改
-     *
      */
     public function updatePersonalAccountByThirdId(string $thirdPartyUserId, $mobile = null, $idNumber = null, $name = null, $idType = null, $email = null)
     {
@@ -142,12 +139,11 @@ class Account implements API
      * 查询个人账户（按照账户ID查询）.
      *
      * @param  string  $accountId  个人账号id
-     *
      */
     public function queryPersonalAccountByAccountId(string $accountId)
     {
         $url = sprintf(self::ACCOUNT_BY_ID, $accountId);
-        
+
         $response = $this->adapter->get($url);
 
         $this->body = json_decode((string) $response->getBody());
@@ -159,7 +155,6 @@ class Account implements API
      * 注销个人账户（按照账号ID注销）.
      *
      * @param  string  $accountId  个人账号id
-     *
      */
     public function deletePersonalAccountById(string $accountId)
     {
@@ -176,7 +171,6 @@ class Account implements API
      * 注销个人账户（按照第三方用户ID注销）.
      *
      * @param  string  $thirdPartyUserId  第三方平台的用户id
-     *
      */
     public function deletePersonalAccountByThirdId(string $thirdPartyUserId)
     {
@@ -194,7 +188,6 @@ class Account implements API
      *
      * @param  string  $accountId  用户id
      * @param  string  $password  MD5加密后的密文
-     *
      */
     public function setSignPwd(string $accountId, string $password)
     {
@@ -220,7 +213,6 @@ class Account implements API
      * @param  string  $idNumber  string 证件号
      * @param  null  $orgLegalIdNumber  string 企业法人证件号
      * @param  null  $orgLegalName  string 企业法人名称
-     *
      */
     public function createOrganizeAccount(string $thirdPartyUserId, string $creatorAccountId, string $name, ?string $idNumber = null, $orgLegalIdNumber = null, $orgLegalName = null, string $idType = 'CRED_ORG_USCC')
     {
@@ -250,7 +242,6 @@ class Account implements API
      * @param  null  $idNumber  证件号
      * @param  null  $orgLegalIdNumber  企业法人证件号
      * @param  null  $orgLegalName  企业法人名称
-     *
      */
     public function updateOrganizeAccountById(string $orgId, $name = null, $idNumber = null, $orgLegalIdNumber = null, $orgLegalName = null, $idType = null)
     {
@@ -277,7 +268,6 @@ class Account implements API
      * @param  null  $name  机构名称，默认不变
      * @param  null  $idType  证件类型，默认CRED_ORG_USCC
      * @param  null  $idNumber  证件号
-     *
      */
     public function updateOrganizeAccountByThirdId(string $thirdPartyUserId, $name = null, $idNumber = null, $idType = null)
     {
@@ -299,7 +289,6 @@ class Account implements API
      * 查询机构账号（按照账号ID查询）.
      *
      * @param  string  $orgId  机构账号id
-     *
      */
     public function queryOrganizeAccountByOrgId(string $orgId)
     {
@@ -316,7 +305,6 @@ class Account implements API
      * 查询机构账号（按照第三方机构ID查询）.
      *
      * @param  string  $thirdPartyUserId  第三方平台机构id
-     *
      */
     public function queryOrganizeAccountByThirdId(string $thirdPartyUserId)
     {
@@ -333,7 +321,6 @@ class Account implements API
      * 注销机构账号（按照账号ID注销）.
      *
      * @param  string  $orgId  机构账号id
-     *
      */
     public function deleteOrganizeAccountByOrgId(string $orgId)
     {
@@ -350,7 +337,6 @@ class Account implements API
      * 注销机构账号（按照账号ID注销）.
      *
      * @param  string  $thirdPartyUserId  第三方平台的机构id
-     *
      */
     public function deleteOrganizeAccountByThirdId(string $thirdPartyUserId)
     {
@@ -368,7 +354,6 @@ class Account implements API
      *
      * @param  string  $accountId  授权人id，即个人账号id或机构账号id
      * @param  null  $deadline
-     *
      */
     public function setSignAuth(string $accountId, $deadline = null)
     {
@@ -389,7 +374,6 @@ class Account implements API
      * 撤销静默签署.
      *
      * @param  string  $accountId  授权人id，即个人账号id或机构账号id
-     *
      */
     public function deleteSignAuth(string $accountId)
     {
