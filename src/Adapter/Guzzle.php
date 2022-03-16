@@ -27,7 +27,6 @@ class Guzzle implements Adapter
         $this->client = new Client([
             'base_uri' => $baseURI,
             'headers' => $headers,
-            'Accept' => '*/*',
         ]);
     }
 
