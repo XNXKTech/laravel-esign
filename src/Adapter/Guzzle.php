@@ -12,6 +12,7 @@ use XNXK\LaravelEsign\Auth\Auth;
 class Guzzle implements Adapter
 {
     private Client $client;
+    private Auth $auth;
 
     /**
      * @inheritDoc
@@ -22,11 +23,10 @@ class Guzzle implements Adapter
             $baseURI = 'https://smlopenapi.esign.cn/';
         }
 
-        $headers = $auth->getHeaders();
+        $this->auth = $auth;
 
         $this->client = new Client([
             'base_uri' => $baseURI,
-            'headers' => $headers,
         ]);
     }
 
@@ -81,7 +81,7 @@ class Guzzle implements Adapter
 
         try {
             $response = $this->client->$method($uri, [
-                'headers' => $headers,
+                'headers' => $this->auth->getHeaders($method, $uri, $data, $headers),
                 ($method === 'get' ? 'query' : 'json') => $data,
             ]);
         } catch (RequestException $err) {

@@ -32,8 +32,9 @@ if (!function_exists('getSignature')) {
         string $contentType,
         string $contentMd5,
         string $date,
-        $headers,
-        string $url
+        string $headers,
+        string $url,
+        string $secret
     ): string {
         $stringToSign = $httpMethod . "\n" . $accept . "\n" . $contentMd5 . "\n" . $contentType . "\n" . $date . "\n" . $headers;
         if ($headers !== '') {
@@ -41,7 +42,7 @@ if (!function_exists('getSignature')) {
         } else {
             $stringToSign .= $url;
         }
-        $signature = hash_hmac('sha256', utf8_encode($stringToSign), utf8_encode(Factory::getProjectScert()), true);
+        $signature = hash_hmac('sha256', utf8_encode($stringToSign), utf8_encode($secret), true);
 
         return base64_encode($signature);
     }
@@ -57,10 +58,21 @@ if (!function_exists('getMillisecond')) {
 }
 
 if (!function_exists('getContentBase64Md5')) {
-    function getContentBase64Md5($filePath): string
+    function getContentBase64Md5(string $filePath): string
     {
         $md5file = md5_file($filePath, true);
 
         return base64_encode($md5file);
+    }
+}
+
+if (!function_exists('getHeadersToString')) {
+    function getHeadersToString(array $headers): string
+    {
+        if (empty($headers)) {
+            return '';
+        }
+
+        return str_replace('&', "\n", http_build_query($headers));
     }
 }

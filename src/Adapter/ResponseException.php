@@ -4,9 +4,10 @@ declare(strict_types=1);
 
 namespace XNXK\LaravelEsign\Adapter;
 
+use Exception;
 use GuzzleHttp\Exception\RequestException;
 
-class ResponseException extends \Exception
+class ResponseException extends Exception
 {
     /**
      * Generates a ResponseException from a Guzzle RequestException.

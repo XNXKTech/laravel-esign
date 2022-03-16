@@ -63,13 +63,14 @@ return [
     ],
 
     'remove' => [
-        //  ExampleInsight::class,
+        SlevomatCodingStandard\Sniffs\Functions\FunctionLengthSniff::class,
+        NunoMaduro\PhpInsights\Domain\Insights\ForbiddenNormalClasses::class,
     ],
 
     'config' => [
         LineLengthSniff::class => [
             'lineLimit' => 200,
-            'absoluteLineLimit' => 160,
+            'absoluteLineLimit' => 200,
         ],
     ],
 

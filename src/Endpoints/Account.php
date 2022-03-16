@@ -42,7 +42,7 @@ class Account implements API
 
         $this->body = json_decode((string) $response->getBody());
 
-        return $this->body->result;
+        return $this->body;
     }
 
     /**
@@ -71,7 +71,7 @@ class Account implements API
 
         $this->body = json_decode((string) $response->getBody());
 
-        return $this->body->result;
+        return $this->body;
     }
 
     /**
@@ -101,6 +101,6 @@ class Account implements API
 
         $this->body = json_decode((string) $response->getBody());
 
-        return $this->body->result;
+        return $this->body;
     }
 }
