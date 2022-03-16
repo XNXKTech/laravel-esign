@@ -30,7 +30,7 @@ class Token implements Auth
             $signatureHeaders['Accept'],
             $signatureHeaders['Content-Type'],
             $signatureHeaders['Content-MD5'],
-            date('D, d M Y G:i:s T'),
+            '',
             getHeadersToString($headers),
             $uri,
             $this->secret
