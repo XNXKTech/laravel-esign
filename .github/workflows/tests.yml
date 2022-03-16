@@ -87,3 +87,7 @@ jobs:
 
       - name: Run Testsuite
         run: vendor/bin/pest tests/ --coverage-text --colors=always --coverage-html=coverage
+        env: 
+          ESIGN_APPID: ${{secrets.ESIGN_APPID}}
+          ESIGN_APPID: ${{secrets.ESIGN_SECRET}}
+          ESIGN_APPID: {{secrets.ESIGN_NOTIFY_URL}}
