@@ -12,7 +12,7 @@ class APIKeyTest extends TestCase
     public function testGetHeaders()
     {
         $auth = new Token(env('ESIGN_APPID'), env('ESIGN_SECRET'));
-        $headers = $auth->getHeaders();
+        $headers = $auth->getHeaders('GET', '/', [], []);
 
         $this->assertArrayHasKey('Accept', $headers);
         $this->assertArrayHasKey('X-Tsign-Open-App-Id', $headers);
