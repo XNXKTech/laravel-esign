@@ -21,6 +21,7 @@
         "nunomaduro/phpinsights": "^2.1",
         "orchestra/testbench": "^7.1",
         "pestphp/pest": "^1.21",
+        "pestphp/pest-plugin-parallel": "^1.0",
         "phpunit/phpunit": "^9.0",
         "roave/security-advisories": "dev-latest"
     },
