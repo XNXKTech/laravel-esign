@@ -2,18 +2,26 @@
 
 declare(strict_types=1);
 
-namespace XNXK\LaravelEsign\Identity;
+namespace XNXK\LaravelEsign\Endpoints;
 
-use XNXK\LaravelEsign\Core\AbstractAPI;
-use XNXK\LaravelEsign\Exceptions\HttpException;
-use XNXK\LaravelEsign\Support\Collection;
+use XNXK\LaravelEsign\Adapter\Adapter;
+use XNXK\LaravelEsign\Traits\BodyAccessorTrait;
 
-class Identity extends AbstractAPI
+class Identity implements API
 {
-    // 认证Api
+    use BodyAccessorTrait;
+    
+    // API URL
     public const ORG_IDENTITY_URL = '/v2/identity/auth/web/%s/orgIdentityUrl';                                    // 获取组织机构实名认证地址
     public const CHECK_BANK_CARD_4FACTORS = '/v2/identity/auth/api/individual/bankCard4Factors';                  // 银行卡4要素核身校验
-    public const CHECK_BANK_MOBILE_AUTH_CODE = '/v2/identity/auth/pub/individual/%s/bankCard4Factors';      // 银行预留手机号验证码检验
+    public const CHECK_BANK_MOBILE_AUTH_CODE = '/v2/identity/auth/pub/individual/%s/bankCard4Factors';            // 银行预留手机号验证码检验
+
+    private Adapter $adapter;
+
+    public function __construct(Adapter $adapter)
+    {
+        $this->adapter = $adapter;
+    }
 
     /**
      * @param  string  $orgId  机构 id
@@ -24,10 +32,8 @@ class Identity extends AbstractAPI
      * @param  string  $authType  指定默认认证类型
      * @param  bool  $repeatIdentity  是否允许重复实名，默认允许
      * @param  bool  $showResultPage  实名完成是否显示结果页,默认显示
-     *
-     * @throws HttpException
      */
-    public function getOrgIdentityUrl(string $orgId, string $agentAccountId, string $notifyUrl = '', string $redirectUrl = '', string $contextId = '', string $authType = '', bool $repeatIdentity = true, bool $showResultPage = true): ?Collection
+    public function getOrgIdentityUrl(string $orgId, string $agentAccountId, string $notifyUrl = '', string $redirectUrl = '', string $contextId = '', string $authType = '', bool $repeatIdentity = true, bool $showResultPage = true)
     {
         $url = sprintf(self::ORG_IDENTITY_URL, $orgId);
 
@@ -43,7 +49,11 @@ class Identity extends AbstractAPI
             ],
         ];
 
-        return $this->parseJSON('json', [$url, $params]);
+        $response = $this->adapter->post($url, $params);
+
+        $this->body = json_decode((string) $response->getBody());
+
+        return $this->body;
     }
 
     /**
@@ -54,10 +64,8 @@ class Identity extends AbstractAPI
      * @param  string  $contextId  发起方业务上下文标识
      * @param  string  $notifyUrl  认证结束后异步通知地址
      * @param  string  $certType  个人证件类型 不传默认为身份证
-     *
-     * @throws HttpException
      */
-    public function verifyBankCard4Factors(string $name, string $idNo, string $mobileNo = '', string $bankCardNo = '', string $contextId = '', string $certType = '', string $notifyUrl = ''): ?Collection
+    public function verifyBankCard4Factors(string $name, string $idNo, string $mobileNo = '', string $bankCardNo = '', string $contextId = '', string $certType = '', string $notifyUrl = '')
     {
         $url = self::CHECK_BANK_CARD_4FACTORS;
 
@@ -71,21 +79,27 @@ class Identity extends AbstractAPI
             'notifyUrl' => $notifyUrl,
         ];
 
-        return $this->parseJSON('json', [$url, $params]);
+        $response = $this->adapter->post($url, $params);
+
+        $this->body = json_decode((string) $response->getBody());
+
+        return $this->body;
     }
 
     /**
      * @param  string  $flowId  实名认证流程Id
      * @param  string  $authcode  短信验证码，用户收到的6位数字验证码
-     *
-     * @throws HttpException
      */
-    public function verifyAuthCodeOfMobile(string $flowId, string $authcode): ?Collection
+    public function verifyAuthCodeOfMobile(string $flowId, string $authcode)
     {
         $url = sprintf(self::CHECK_BANK_MOBILE_AUTH_CODE, $flowId);
 
         $params = ['authcode' => $authcode];
 
-        return $this->parseJSON('json', [$url, $params, 256, [], 'put']);
+        $response = $this->adapter->post($url, $params);
+
+        $this->body = json_decode((string) $response->getBody());
+
+        return $this->body;
     }
 }
