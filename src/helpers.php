@@ -71,8 +71,8 @@ if (!function_exists('getHeadersToString')) {
     {
         if (empty($headers)) {
             return '';
-        } else {
-            return str_replace('&', "\n", http_build_query($headers));
         }
+
+        return str_replace('&', "\n", http_build_query($headers));
     }
 }

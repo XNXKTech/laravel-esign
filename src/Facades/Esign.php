@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Facade;
 
 class Esign extends Facade
 {
-    protected static function getFacadeAccessor()
+    public static function getFacadeAccessor(): string
     {
         return 'laravel-esign';
     }
