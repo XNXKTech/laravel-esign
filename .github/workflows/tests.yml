@@ -79,10 +79,10 @@ jobs:
       - name: Prepare for environment variables
         run: |
           cp .env.testing .env
-          echo "ESIGN_APPID = ${{secrets.ESIGN_APPID}}" >> .env 
-          echo "ESIGN_SECRET = ${{secrets.ESIGN_SECRET}}" >> .env 
-          echo "ESIGN_SERVER = ${{secrets.ESIGN_SERVER}}" >> .env
-          echo "ESIGN_NOTIFY_URL = ${{secrets.ESIGN_NOTIFY_URL" >> .env
+          echo "ESIGN_APPID = ${{secrets.ESIGN_APPID}}\n" >> .env 
+          echo "ESIGN_SECRET = ${{secrets.ESIGN_SECRET}}\n" >> .env 
+          echo "ESIGN_SERVER = ${{secrets.ESIGN_SERVER}}\n" >> .env
+          echo "ESIGN_NOTIFY_URL = ${{secrets.ESIGN_NOTIFY_URL}}\n" >> .env
           composer dump-autoload
 
       - name: Run Testsuite
