@@ -2,6 +2,25 @@
 
 declare(strict_types=1);
 
+use XNXK\LaravelEsign\Esign;
+
+if (! function_exists('esign')) {
+    /**
+     * Helper to easy load an esign method or the api.
+     *
+     * @param  string|null  $method esign method name
+     *
+     * @return \XNXK\LaravelEsign\Esign
+     */
+    function esign(string $method = null): Esign
+    {
+        $esign = app(Esign::class);
+
+        return $method ? $esign->load($method) : $esign;
+    }
+}
+
+
 if (! function_exists('getContentMd5')) {
     function getContentMd5($bodyData): string
     {
