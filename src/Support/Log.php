@@ -35,7 +35,7 @@ class Log
 
     public static function getLogger()
     {
-        return self::$logger ? : self::$logger = self::createDefaultLogger();
+        return self::$logger ?: self::$logger = self::createDefaultLogger();
     }
 
     /**
