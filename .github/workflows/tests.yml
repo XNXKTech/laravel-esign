@@ -81,7 +81,6 @@ jobs:
           cp .env.testing .env
           sed -i 's/ESIGN_APPID=/ESIGN_APPID=${{secrets.ESIGN_APPID}}/g' .env
           sed -i 's/ESIGN_SECRET=/ESIGN_APPID=${{secrets.ESIGN_SECRET}}/g' .env
-          sed -i 's/ESIGN_SERVER=https://smlopenapi.esign.cn/ESIGN_APPID=${{secrets.ESIGN_SERVER}}/g' .env
           sed -i 's/ESIGN_NOTIFY_URL=/ESIGN_APPID=${{secrets.ESIGN_NOTIFY_URL}}/g' .env
           composer dump-autoload
 
