@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests;
 
+use Illuminate\Foundation\Bootstrap\LoadEnvironmentVariables;
 use XNXK\LaravelEsign\ServiceProvider;
 
 class TestCase extends \Orchestra\Testbench\TestCase
@@ -18,10 +19,11 @@ class TestCase extends \Orchestra\Testbench\TestCase
         parent::setUp();
     }
 
-    protected function defineEnvironment($app)
+    protected function getEnvironmentSetUp($app)
     {
-        $app['config']->set('appId', env('ESIGN_APPID'));
-        $app['config']->set('secret', env('ESIGN_SERVER'));
-        $app['config']->set('server', env('ESIGN_SERVER'));
+        // make sure, our .env file is loaded
+        $app->useEnvironmentPath(__DIR__.'/..');
+        $app->bootstrapWith([LoadEnvironmentVariables::class]);
+        parent::getEnvironmentSetUp($app);
     }
 }
