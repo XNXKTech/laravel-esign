@@ -82,6 +82,7 @@ jobs:
           sed -i 's/ESIGN_APPID=/ESIGN_APPID=${{secrets.ESIGN_APPID}}/g' .env
           sed -i 's/ESIGN_SECRET=/ESIGN_APPID=${{secrets.ESIGN_SECRET}}/g' .env
           sed -i 's/ESIGN_NOTIFY_URL=/ESIGN_APPID=${{secrets.ESIGN_NOTIFY_URL}}/g' .env
+          cat .env
           composer dump-autoload
 
       - name: Run Testsuite
