@@ -64,3 +64,14 @@ if (!function_exists('getContentBase64Md5')) {
         return base64_encode($md5file);
     }
 }
+
+if (! function_exists('getHeadersToString')) {
+    function getHeadersToString(array $headers): string
+    {
+        if (empty($headers)) {
+            return '';
+        } else {
+            return str_replace('&', "\n", http_build_query($headers));
+        }
+    }
+}
