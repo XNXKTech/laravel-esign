@@ -1,6 +1,9 @@
-name: format
+name: Format
 
-on: pull_request
+on:
+  schedule:
+    - cron: '0 9 * * *' # everyday at 9am UTC
+  workflow_dispatch:
 
 jobs:
   php-cs-fixer:
