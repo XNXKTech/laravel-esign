@@ -13,18 +13,6 @@ class GuzzleTest extends TestCase
 {
     private Guzzle $client;
 
-    public function setUp(): void
-    {
-        $auth = $this->getMockBuilder(Auth::class)
-            ->onlyMethods(['getHeaders'])
-            ->getMock();
-
-        $auth->method('getHeaders')
-            ->willReturn(['X-Testing' => 'Test']);
-
-        $this->client = new Guzzle($auth, 'https://httpbin.org/');
-    }
-
     public function testGet()
     {
         $response = $this->client->get('https://httpbin.org/get');
