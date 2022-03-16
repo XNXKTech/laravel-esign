@@ -75,7 +75,7 @@ class Guzzle implements Adapter
      */
     public function request(string $method, string $uri, array $data = [], array $headers = [])
     {
-        if (! in_array($method, ['get', 'post', 'put', 'patch', 'delete'])) {
+        if (!in_array($method, ['get', 'post', 'put', 'patch', 'delete'])) {
             throw new \InvalidArgumentException('Request method must be get, post, put, patch, or delete');
         }
 

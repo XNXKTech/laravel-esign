@@ -6,8 +6,8 @@ namespace XNXK\LaravelEsign;
 
 use Illuminate\Support\Traits\Macroable;
 use XNXK\LaravelEsign\Adapter\Guzzle as Adapter;
-use XNXK\LaravelEsign\Endpoints\Account;
 use XNXK\LaravelEsign\Auth\Token;
+use XNXK\LaravelEsign\Endpoints\Account;
 
 class Esign
 {

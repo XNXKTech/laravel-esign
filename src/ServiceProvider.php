@@ -11,7 +11,7 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
     public function register(): void
     {
         $this->mergeConfigFrom(
-            __DIR__.'/../config/esign.php',
+            __DIR__ . '/../config/esign.php',
             'esign'
         );
 
@@ -27,7 +27,7 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
     public function boot(): void
     {
         $this->publishes([
-            __DIR__.'/../config/esign.php' => config_path('esign.php'),
+            __DIR__ . '/../config/esign.php' => config_path('esign.php'),
         ], 'config');
     }
 }

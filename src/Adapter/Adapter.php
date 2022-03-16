@@ -8,10 +8,7 @@ use Psr\Http\Message\ResponseInterface;
 use XNXK\LaravelEsign\Auth\Auth;
 
 /**
- * Interface Adapter
- *
- * @package Cloudflare\API\Adapter
- * Note that the $body fields expect a JSON key value store.
+ * Interface Adapter.
  */
 interface Adapter
 {

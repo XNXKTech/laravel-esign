@@ -1,16 +1,15 @@
 <?php
 
+declare(strict_types=1);
+
 namespace XNXK\LaravelEsign\Endpoints;
 
 use XNXK\LaravelEsign\Adapter\Adapter;
-use XNXK\LaravelEsign\Configurations\Configurations;
 use XNXK\LaravelEsign\Traits\BodyAccessorTrait;
 
 class Account implements API
 {
     use BodyAccessorTrait;
-
-    private Adapter $adapter;
 
     // API URL
     public const CREATE_PERSONAL_ACCOUNT = '/v1/accounts/createByThirdPartyUserId';                // 创建个人账户
@@ -26,12 +25,15 @@ class Account implements API
     public const DEL_ORG_BY_THIRD_ID = '/v1/organizations/deleteByThirdId?thirdPartyUserId=%s';    // 注销机构账号（按照账号ID注销）
     public const SIGN_AUTH = '/v1/signAuth/%s';                                                    // 设置静默签署/撤销静默签署
 
+    private Adapter $adapter;
+
     public function __construct(Adapter $adapter)
     {
         $this->adapter = $adapter;
     }
 
-    public function queryPersonalAccountByThirdId(string $thirdId){
+    public function queryPersonalAccountByThirdId(string $thirdId)
+    {
         $params = [
             'thirdPartyUserId' => $thirdId,
         ];
@@ -41,7 +43,6 @@ class Account implements API
         $this->body = json_decode($response->getBody());
 
         return $this->body->result;
-
     }
 
     /**
@@ -54,7 +55,6 @@ class Account implements API
      * @param  string|null  $email 邮箱地址
      *
      * @param  string  $idType 证件类型, 默认: CRED_PSN_CH_IDCARD
-     *
      */
     public function createPersonalAccount(string $thirdPartyUserId, ?string $mobile = null, ?string $name = null, ?string $idNumber = null, ?string $email = null, string $idType = 'CRED_PSN_CH_IDCARD')
     {

@@ -1,13 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Adapter;
 
-use Tests\TestCase;
-use XNXK\LaravelEsign\Adapter\ResponseException;
-use XNXK\LaravelEsign\Adapter\JSONException;
 use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Psr7\Request;
-use GuzzleHttp\Psr7\Response;
+use Tests\TestCase;
+use XNXK\LaravelEsign\Adapter\ResponseException;
 
 /**
  * @SuppressWarnings(PHPMD.StaticAccess)

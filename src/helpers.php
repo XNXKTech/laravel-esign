@@ -4,15 +4,13 @@ declare(strict_types=1);
 
 use XNXK\LaravelEsign\Esign;
 
-if (! function_exists('esign')) {
+if (!function_exists('esign')) {
     /**
      * Helper to easy load an esign method or the api.
      *
      * @param  string|null  $method esign method name
-     *
-     * @return \XNXK\LaravelEsign\Esign
      */
-    function esign(string $method = null): Esign
+    function esign(?string $method = null): Esign
     {
         $esign = app(Esign::class);
 
@@ -20,15 +18,14 @@ if (! function_exists('esign')) {
     }
 }
 
-
-if (! function_exists('getContentMd5')) {
+if (!function_exists('getContentMd5')) {
     function getContentMd5($bodyData): string
     {
         return base64_encode(md5($bodyData, true));
     }
 }
 
-if (! function_exists('getSignature')) {
+if (!function_exists('getSignature')) {
     function getSignature(
         string $httpMethod,
         string $accept,
@@ -38,9 +35,9 @@ if (! function_exists('getSignature')) {
         $headers,
         string $url
     ): string {
-        $stringToSign = $httpMethod."\n".$accept."\n".$contentMd5."\n".$contentType."\n".$date."\n".$headers;
+        $stringToSign = $httpMethod . "\n" . $accept . "\n" . $contentMd5 . "\n" . $contentType . "\n" . $date . "\n" . $headers;
         if ($headers !== '') {
-            $stringToSign .= "\n".$url;
+            $stringToSign .= "\n" . $url;
         } else {
             $stringToSign .= $url;
         }
@@ -50,15 +47,16 @@ if (! function_exists('getSignature')) {
     }
 }
 
-if (! function_exists('getMillisecond')) {
+if (!function_exists('getMillisecond')) {
     function getMillisecond(): float
     {
         [$t1, $t2] = explode(' ', microtime());
+
         return (float) sprintf('%.0f', (floatval($t1) + floatval($t2)) * 1000);
     }
 }
 
-if (! function_exists('getContentBase64Md5')) {
+if (!function_exists('getContentBase64Md5')) {
     function getContentBase64Md5($filePath): string
     {
         $md5file = md5_file($filePath, true);
