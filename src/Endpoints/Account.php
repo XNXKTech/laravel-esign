@@ -40,7 +40,7 @@ class Account implements API
 
         $response = $this->adapter->get(self::QUERY_ACCOUNT_BY_THIRD_ID, $params);
 
-        $this->body = json_decode($response->getBody());
+        $this->body = json_decode((string) $response->getBody());
 
         return $this->body->result;
     }
@@ -69,7 +69,7 @@ class Account implements API
 
         $response = $this->adapter->post(self::CREATE_PERSONAL_ACCOUNT, $params);
 
-        $this->body = json_decode($response->getBody());
+        $this->body = json_decode((string) $response->getBody());
 
         return $this->body->result;
     }
@@ -99,7 +99,7 @@ class Account implements API
 
         $response = $this->adapter->post($url, $params);
 
-        $this->body = json_decode($response->getBody());
+        $this->body = json_decode((string) $response->getBody());
 
         return $this->body->result;
     }

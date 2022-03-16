@@ -32,11 +32,11 @@ class GuzzleTest extends TestCase
         $headers = $response->getHeaders();
         $this->assertEquals('application/json', $headers['Content-Type'][0]);
 
-        $body = json_decode($response->getBody());
+        $body = json_decode((string) $response->getBody());
         $this->assertEquals('Test', $body->headers->{'X-Testing'});
 
         $response = $this->client->get('https://httpbin.org/get', [], ['X-Another-Test' => 'Test2']);
-        $body = json_decode($response->getBody());
+        $body = json_decode((string) $response->getBody());
         $this->assertEquals('Test2', $body->headers->{'X-Another-Test'});
     }
 
@@ -47,7 +47,7 @@ class GuzzleTest extends TestCase
         $headers = $response->getHeaders();
         $this->assertEquals('application/json', $headers['Content-Type'][0]);
 
-        $body = json_decode($response->getBody());
+        $body = json_decode((string) $response->getBody());
         $this->assertEquals('Testing a POST request.', $body->json->{'X-Post-Test'});
     }
 
@@ -58,7 +58,7 @@ class GuzzleTest extends TestCase
         $headers = $response->getHeaders();
         $this->assertEquals('application/json', $headers['Content-Type'][0]);
 
-        $body = json_decode($response->getBody());
+        $body = json_decode((string) $response->getBody());
         $this->assertEquals('Testing a PUT request.', $body->json->{'X-Put-Test'});
     }
 
@@ -72,7 +72,7 @@ class GuzzleTest extends TestCase
         $headers = $response->getHeaders();
         $this->assertEquals('application/json', $headers['Content-Type'][0]);
 
-        $body = json_decode($response->getBody());
+        $body = json_decode((string) $response->getBody());
         $this->assertEquals('Testing a PATCH request.', $body->json->{'X-Patch-Test'});
     }
 
@@ -86,7 +86,7 @@ class GuzzleTest extends TestCase
         $headers = $response->getHeaders();
         $this->assertEquals('application/json', $headers['Content-Type'][0]);
 
-        $body = json_decode($response->getBody());
+        $body = json_decode((string) $response->getBody());
         $this->assertEquals('Testing a DELETE request.', $body->json->{'X-Delete-Test'});
     }
 
