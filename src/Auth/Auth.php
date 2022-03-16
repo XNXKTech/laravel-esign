@@ -6,5 +6,5 @@ namespace XNXK\LaravelEsign\Auth;
 
 interface Auth
 {
-    public function getHeaders(): array;
+    public function getHeaders(string $method, string $uri, array $data, array $headers): array;
 }
