@@ -8,6 +8,7 @@ use Illuminate\Support\Traits\Macroable;
 use XNXK\LaravelEsign\Adapter\Guzzle as Adapter;
 use XNXK\LaravelEsign\Auth\Token;
 use XNXK\LaravelEsign\Endpoints\Account;
+use XNXK\LaravelEsign\Endpoints\File;
 
 class Esign
 {
@@ -25,5 +26,10 @@ class Esign
     public function account(): Account
     {
         return new Account($this->adapter);
+    }
+
+    public function file(): File
+    {
+        return new File($this->adapter);
     }
 }

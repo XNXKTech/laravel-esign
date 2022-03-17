@@ -19,7 +19,7 @@ class Token implements Auth
     {
         $signatureHeaders = [
             'Accept' => '*/*',
-            'Content-MD5' => getContentMd5(json_encode($data, JSON_UNESCAPED_SLASHES)),
+            'Content-MD5' => $headers && $headers['Content-MD5'] ? $headers['Content-MD5'] : getContentMd5(json_encode($data)),
             'Content-Type' => 'application/json; charset=UTF-8',
             'X-Tsign-Open-App-Id' => $this->appid,
             'X-Tsign-Open-Ca-Timestamp' => getMillisecond(),
