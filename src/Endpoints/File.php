@@ -10,7 +10,7 @@ use XNXK\LaravelEsign\Traits\BodyAccessorTrait;
 class File implements API
 {
     use BodyAccessorTrait;
-
+    
     // Api URL
     public const CREATE_SIGN_DOCUMENT = '/v1/files/getUploadUrl';                          // 通过上传方式创建文件
     public const CREATE_UPLOAD_URL = '/v1/docTemplates/createByUploadUrl';                 // 通过上传方式创建模板
@@ -29,7 +29,7 @@ class File implements API
     }
 
     /**
-     * 通过上传方式创建文件.
+     * 获取上传文件地址.
      *
      * @param  string  $contentMd5  先计算文件md5值，在对该md5值进行base64编码
      * @param  string  $contentType  目标文件的MIME类型，支持：（1）application/octet-stream（2）application/pdf
@@ -37,7 +37,7 @@ class File implements API
      * @param  string  $fileName  文件名称（必须带上文件扩展名，不然会导致后续发起流程校验过不去 示例：合同.pdf ）
      * @param  int  $fileSize  文件大小，单位byte
      */
-    public function getUploadFileUrl(string $contentMd5, string $fileName, int $fileSize, string $contentType = 'application/pdf', bool $convert2Pdf = false)
+    private function getUploadFileUrl(string $contentMd5, string $fileName, int $fileSize, string $contentType = 'application/pdf', bool $convert2Pdf = false)
     {
         $params = [
             'contentMd5' => $contentMd5,
@@ -46,7 +46,7 @@ class File implements API
             'fileName' => $fileName,
             'fileSize' => $fileSize,
         ];
-
+        
         $response = $this->adapter->post(self::CREATE_SIGN_DOCUMENT, $params);
 
         $this->body = json_decode((string) $response->getBody());
@@ -55,7 +55,7 @@ class File implements API
     }
 
     /**
-     * 通过上传方式创建文件 && 上传文件.
+     * 通过获取上传文件地址 && 上传文件.
      *
      * @param $filePath
      * @param string $fileName 文件名称（必须带上文件扩展名，不然会导致后续发起流程校验过不去 示例：合同.pdf ）
@@ -64,26 +64,26 @@ class File implements API
      * @param bool $convert2Pdf 是否转换成pdf文档，默认false
      * @return mixed
      */
-    public function getUploadFile($filePath, string $fileName, int $fileSize, string $contentType = 'application/pdf', bool $convert2Pdf = false)
+    public function uploadFile($filePath, string $fileName, int $fileSize, string $contentType = 'application/pdf', bool $convert2Pdf = false)
     {
-        $contentMd5 = $this->_getContentBase64Md5($filePath);
+        $contentMd5 = getContentBase64Md5($filePath);
 
-        $result = $this->getUploadFileUrl($contentMd5, $fileName, $fileSize, $contentType = 'application/pdf', $convert2Pdf);
+        $result = $this->getUploadFileUrl($contentMd5, $fileName, $fileSize, $contentType, $convert2Pdf);
 
-        $this->_upLoadFile($result['uploadUrl'], $filePath, $contentMd5, $contentType);
+        $this->upload($result->data->uploadUrl, $filePath, $contentMd5, $contentType);
 
         return $result;
     }
 
     /**
-     * (模板方式)通过上传方式创建模板.
+     * (模板方式) 获取上传文件地址.
      *
      * @param  string  $contentMd5  先计算文件md5值，在对该md5值进行base64编码
      * @param  string  $contentType  目标文件的MIME类型，支持：（1）application/octet-stream（2）application/pdf
      * @param  string  $fileName  文件名称（必须带上文件扩展名，不然会导致后续发起流程校验过不去 示例：合同.pdf ）
      * @param  bool  $convert2Pdf  是否转换成pdf文档，默认false
      */
-    public function createByUploadUrl(string $contentMd5, string $fileName, string $contentType = 'application/pdf', bool $convert2Pdf = false)
+    private function getUploadFileUrlByDocTemplates(string $contentMd5, string $fileName, string $contentType = 'application/pdf', bool $convert2Pdf = false)
     {
         $params = [
             'contentMd5' => $contentMd5,
@@ -91,7 +91,7 @@ class File implements API
             'convert2Pdf' => $convert2Pdf,
             'fileName' => $fileName,
         ];
-
+        
         $response = $this->adapter->post(self::CREATE_UPLOAD_URL, $params);
 
         $this->body = json_decode((string) $response->getBody());
@@ -100,17 +100,17 @@ class File implements API
     }
 
     /**
-     * 通过上传方式创建模板 && 上传文件.
+     * (模板方式) 获取上传文件地址 && 上传文件.
      *
      * @param  string  $contentMd5
      */
-    public function createByUploadFile($filePath, string $fileName, string $contentType = 'application/pdf', bool $convert2Pdf = false)
+    public function uploadFileByDocTemplates($filePath, string $fileName, string $contentType = 'application/pdf', bool $convert2Pdf = false)
     {
-        $contentMd5 = $this->_getContentBase64Md5($filePath);
+        $contentMd5 = getContentBase64Md5($filePath);
 
-        $result = $this->createByUploadUrl($contentMd5, $fileName, $contentType = 'application/pdf', $convert2Pdf);
+        $result = $this->getUploadFileUrlByDocTemplates($contentMd5, $fileName, $contentType = 'application/pdf', $convert2Pdf);
 
-        $this->_upLoadFile($result['uploadUrl'], $filePath, $contentMd5, $contentType);
+        $this->upload($result->data->uploadUrl, $filePath, $contentMd5, $contentType);
 
         return $result;
     }
@@ -177,7 +177,7 @@ class File implements API
                 ],
             ],
         ];
-
+        
         $response = $this->adapter->post($url, $params);
 
         $this->body = json_decode((string) $response->getBody());
@@ -194,7 +194,7 @@ class File implements API
     public function deleteInputOptions(string $templateId, string $ids)
     {
         $url = sprintf(self::DEL_DOC_TEMPLATES, $templateId, $ids);
-
+        
         $response = $this->adapter->delete($url);
 
         $this->body = json_decode((string) $response->getBody());
@@ -207,7 +207,7 @@ class File implements API
      *
      * @param  string  $templateId  模板id
      */
-    public function downloadDocTemplate(string $templateId)
+    public function downloadFileByDocTemplate(string $templateId)
     {
         $url = sprintf(self::QUERY_DOC_TEMPLATES, $templateId);
 
@@ -248,7 +248,7 @@ class File implements API
     public function downloadFile(string $fileId)
     {
         $url = sprintf(self::QUERY_FILE, $fileId);
-
+        
         $response = $this->adapter->get($url);
 
         $this->body = json_decode((string) $response->getBody());
@@ -281,36 +281,21 @@ class File implements API
     /**
      * 上传文件.
      */
-    private function _upLoadFile(string $uploadUrls, string $filePath, string $contentMd5, $contentType = 'application/pdf'): mixed
+    private function upload(string $uploadUrls, string $filePath, string $contentMd5, $contentType = 'application/pdf'): mixed
     {
-        $fileContent = file_get_contents($filePath);
-
+        $params = [
+            'body' => file_get_contents($filePath)
+        ];
+        
         $headers = [
-            'Content-Type:' . $contentType,
-            'Content-Md5:' . $contentMd5,
+            'Content-Type' => $contentType,
+            'Content-MD5' => $contentMd5,
         ];
 
-        $response = $this->adapter->put($uploadUrls, [$fileContent], $headers);
+        $response = $this->adapter->put($uploadUrls, $params, $headers);
 
         $this->body = json_decode((string) $response->getBody());
 
         return $this->body;
-    }
-
-    /**
-     *  获取文件的Content-MD5
-     *  原理：
-     *  1.先计算MD5加密的二进制数组（128位）
-     *  2.再对这个二进制进行base64编码（而不是对32位字符串编码）.
-     *
-     * @param $filePath
-     * @return string
-     */
-    private function _getContentBase64Md5($filePath): string
-    {
-        //获取文件MD5的128位二进制数组
-        $md5file = md5_file($filePath, true);
-        //计算文件的Content-MD5
-        return base64_encode($md5file);
     }
 }
