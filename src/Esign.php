@@ -9,6 +9,7 @@ use XNXK\LaravelEsign\Adapter\Guzzle as Adapter;
 use XNXK\LaravelEsign\Auth\Token;
 use XNXK\LaravelEsign\Endpoints\Account;
 use XNXK\LaravelEsign\Endpoints\File;
+use XNXK\LaravelEsign\Endpoints\SignFlow;
 
 class Esign
 {
@@ -31,5 +32,10 @@ class Esign
     public function file(): File
     {
         return new File($this->adapter);
+    }
+
+    public function signFlow(): SignFlow
+    {
+        return new SignFlow($this->adapter);
     }
 }

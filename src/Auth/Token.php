@@ -17,9 +17,14 @@ class Token implements Auth
 
     public function getHeaders(string $method, string $uri, array $data, array $headers): array
     {
+        if (count($data) === 0) {
+            $contentMD5 = '';
+        } else {
+            $contentMD5 = $headers && $headers['Content-MD5'] ? $headers['Content-MD5'] : getContentMd5(json_encode($data));
+        }
         $signatureHeaders = [
             'Accept' => '*/*',
-            'Content-MD5' => $headers && $headers['Content-MD5'] ? $headers['Content-MD5'] : getContentMd5(json_encode($data)),
+            'Content-MD5' => $contentMD5,
             'Content-Type' => 'application/json; charset=UTF-8',
             'X-Tsign-Open-App-Id' => $this->appid,
             'X-Tsign-Open-Ca-Timestamp' => getMillisecond(),
@@ -35,7 +40,7 @@ class Token implements Auth
             $uri,
             $this->secret
         );
-
+        
         return array_merge($signatureHeaders, $headers);
     }
 }
