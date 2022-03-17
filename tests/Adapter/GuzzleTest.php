@@ -34,10 +34,6 @@ class GuzzleTest extends TestCase
 
         $body = json_decode((string) $response->getBody());
         $this->assertEquals('Test', $body->headers->{'X-Testing'});
-
-        $response = $this->client->get('https://httpbin.org/get', [], ['X-Another-Test' => 'Test2']);
-        $body = json_decode((string) $response->getBody());
-        $this->assertEquals('Test2', $body->headers->{'X-Another-Test'});
     }
 
     public function testPost()
