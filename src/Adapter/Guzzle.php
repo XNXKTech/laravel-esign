@@ -80,10 +80,18 @@ class Guzzle implements Adapter
         }
 
         try {
-            $response = $this->client->$method($uri, [
-                'headers' => $this->auth->getHeaders($method, $uri, $data, $headers),
-                ($method === 'get' ? 'query' : 'json') => $data,
-            ]);
+            $headers = $this->auth->getHeaders($method, $uri, $data, $headers);
+            if (array_key_exists('body', $data)) {
+                $response = $this->client->$method($uri, [
+                    'headers' => $headers,
+                    'body' => $data['body'],
+                ]);
+            } else {
+                $response = $this->client->$method($uri, [
+                    'headers' => $headers,
+                    ($method === 'get' ? 'query' : 'json') => $data,
+                ]);
+            }
         } catch (RequestException $err) {
             throw ResponseException::fromRequestException($err);
         }
