@@ -9,7 +9,6 @@ use Tests\TestHelpers;
 
 class AccountsTest extends TestCase
 {
-
     public function testCreatePersonalAccount()
     {
         $response = app(TestHelpers::class)
@@ -22,12 +21,12 @@ class AccountsTest extends TestCase
                 '',
                 ''
             );
-        
+
         $data = $response->data;
 
         $this->assertObjectHasAttribute('accountId', $data);
-        
-        putenv('TEST_ESIGN_ACCOUNT_ID='.$data->accountId);
+
+        putenv('TEST_ESIGN_ACCOUNT_ID=' . $data->accountId);
     }
 
     public function testQueryPersonalAccountByThirdId()
@@ -38,7 +37,7 @@ class AccountsTest extends TestCase
             ->queryPersonalAccountByThirdId('ef9ab3d3-82f7-4243-976c-312298b51526');
 
         $data = $response->data;
-        
+
         $this->assertObjectHasAttribute('mobile', $data);
         $this->assertObjectHasAttribute('email', $data);
         $this->assertObjectHasAttribute('cardNo', $data);
@@ -50,8 +49,8 @@ class AccountsTest extends TestCase
         $this->assertObjectHasAttribute('thirdPartyUserType', $data);
         $this->assertObjectHasAttribute('status', $data);
     }
-    
-    public function testQueryPersonalAccountByAccountId() 
+
+    public function testQueryPersonalAccountByAccountId()
     {
         $response = app(TestHelpers::class)
             ->esign()
@@ -71,7 +70,7 @@ class AccountsTest extends TestCase
         $this->assertObjectHasAttribute('thirdPartyUserType', $data);
         $this->assertObjectHasAttribute('status', $data);
     }
-    
+
     public function testCreateOrganizeAccount()
     {
         $response = app(TestHelpers::class)
@@ -90,11 +89,12 @@ class AccountsTest extends TestCase
 
         $this->assertObjectHasAttribute('orgId', $data);
 
-        putenv('TEST_ESIGN_ORG_ID='.$data->orgId);
+        putenv('TEST_ESIGN_ORG_ID=' . $data->orgId);
     }
-    
+
     public function testQueryOrganizeAccountByOrgId()
-    { $response = app(TestHelpers::class)
+    {
+        $response = app(TestHelpers::class)
         ->esign()
         ->account()
         ->queryOrganizeAccountByOrgId(env('TEST_ESIGN_ORG_ID'));
@@ -112,14 +112,14 @@ class AccountsTest extends TestCase
         $this->assertObjectHasAttribute('thirdPartyUserType', $data);
         $this->assertObjectHasAttribute('status', $data);
     }
-    
+
     public function testDeleteOrganizeAccountByOrgId()
     {
         $response = app(TestHelpers::class)
             ->esign()
             ->account()
             ->deleteOrganizeAccountByOrgId(env('TEST_ESIGN_ORG_ID'));
-        
+
         $this->assertEquals(0, $response->code);
     }
 

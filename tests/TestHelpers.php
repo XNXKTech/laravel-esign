@@ -12,7 +12,7 @@ class TestHelpers extends TestCase
     {
         parent::setUp();
     }
-    
+
     /**
      * Helper to easy load an esign test method or the api.
      *

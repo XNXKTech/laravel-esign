@@ -11,7 +11,7 @@ class FileTest extends TestCase
 {
     public function testUploadFile()
     {
-        $filePath = dirname(__DIR__).'/Public/test.pdf';
+        $filePath = dirname(__DIR__) . '/Public/test.pdf';
         $response = app(TestHelpers::class)
             ->esign()
             ->file()
@@ -28,8 +28,8 @@ class FileTest extends TestCase
         $this->assertObjectHasAttribute('fileId', $data);
         $this->assertObjectHasAttribute('uploadUrl', $data);
 
-        putenv('TEST_ESIGN_FILE_ID='.$data->fileId);
-        putenv('TEST_ESIGN_FILE_UPLOAD_URL='.$data->uploadUrl);
+        putenv('TEST_ESIGN_FILE_ID=' . $data->fileId);
+        putenv('TEST_ESIGN_FILE_UPLOAD_URL=' . $data->uploadUrl);
     }
 
     public function testDownloadFile()
@@ -51,7 +51,7 @@ class FileTest extends TestCase
 
     public function testUploadFileByDocTemplates()
     {
-        $filePath = dirname(__DIR__).'/Public/test.pdf';
+        $filePath = dirname(__DIR__) . '/Public/test.pdf';
         $response = app(TestHelpers::class)
             ->esign()
             ->file()
@@ -66,11 +66,11 @@ class FileTest extends TestCase
 
         $this->assertObjectHasAttribute('templateId', $data);
         $this->assertObjectHasAttribute('uploadUrl', $data);
-        
-        putenv('TEST_ESIGN_FILE_TEMPLATE_ID='.$data->templateId);
-        putenv('TEST_ESIGN_FILE_TEMPLATE_UPLOAD_URL='.$data->uploadUrl);
+
+        putenv('TEST_ESIGN_FILE_TEMPLATE_ID=' . $data->templateId);
+        putenv('TEST_ESIGN_FILE_TEMPLATE_UPLOAD_URL=' . $data->uploadUrl);
     }
-    
+
     public function testDownloadFileByDocTemplate()
     {
         $response = app(TestHelpers::class)
