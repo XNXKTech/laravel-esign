@@ -17,10 +17,10 @@ class Token implements Auth
 
     public function getHeaders(string $method, string $uri, array $data, array $headers): array
     {
-        if (count($data) === 0) {
-            $contentMD5 = '';
-        } else {
+        if (count($data)) {
             $contentMD5 = $headers && $headers['Content-MD5'] ? $headers['Content-MD5'] : getContentMd5(json_encode($data));
+        } else {
+            $contentMD5 = '';
         }
         $signatureHeaders = [
             'Accept' => '*/*',

@@ -111,11 +111,13 @@ class SignFlow implements API
 
     /**
      * 添加平台自动盖章签署区.
+     * https://open.esign.cn/doc/detail?id=opendoc%2Fpaas_api%2Fog6zl5&namespace=opendoc%2Fpaas_api
      *
-     * @param  string  $flowId  流程id
-     * @param  string  $signFields  签署区列表数据
+     * @param string $flowId 流程id
+     * @param array $signFields 签署区列表数据
+     * @return mixed
      */
-    public function addPlatformSign(string $flowId, string $signFields)
+    public function addPlatformSign(string $flowId, array $signFields)
     {
         $url = sprintf(self::PLATFORM_SIGN_ADD, $flowId);
         $params = [
@@ -131,6 +133,7 @@ class SignFlow implements API
 
     /**
      * 添加签署方自动盖章签署区.
+     * https://open.esign.cn/doc/detail?id=opendoc%2Fpaas_api%2Fvgi378&namespace=opendoc%2Fpaas_api
      *
      * @param  string  $flowId  流程id
      * @param  array  $signFields  签署区列表数据
@@ -151,7 +154,8 @@ class SignFlow implements API
 
     /**
      * 添加手动盖章签署区.
-     *
+     * https://open.esign.cn/doc/detail?id=opendoc%2Fpaas_api%2Figvhzd&namespace=opendoc%2Fpaas_api
+     * 
      * @param  string  $flowId  流程id
      * @param  array  $signFields  签署区列表数据
      */

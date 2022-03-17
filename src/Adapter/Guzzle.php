@@ -89,7 +89,7 @@ class Guzzle implements Adapter
             } else {
                 $response = $this->client->$method($uri, [
                     'headers' => $headers,
-                    ($method === 'get' ? 'query' : 'json') => $data,
+                    ($method === 'get' ? 'query' : 'json') => $data ?: null,
                 ]);
             }
         } catch (RequestException $err) {
