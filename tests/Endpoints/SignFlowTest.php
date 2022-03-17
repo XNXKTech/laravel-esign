@@ -26,12 +26,12 @@ class SignFlowTest extends TestCase
 
         $this->assertObjectHasAttribute('accountId', $data);
 
-        putenv('TEST_ESIGN_ACCOUNT_ID='.$data->accountId);
+        putenv('TEST_ESIGN_ACCOUNT_ID=' . $data->accountId);
     }
 
     public function testUploadFile()
     {
-        $filePath = dirname(__DIR__).'/Public/test.pdf';
+        $filePath = dirname(__DIR__) . '/Public/test.pdf';
         $response = app(TestHelpers::class)
             ->esign()
             ->file()
@@ -48,10 +48,10 @@ class SignFlowTest extends TestCase
         $this->assertObjectHasAttribute('fileId', $data);
         $this->assertObjectHasAttribute('uploadUrl', $data);
 
-        putenv('TEST_ESIGN_FILE_ID='.$data->fileId);
-        putenv('TEST_ESIGN_FILE_UPLOAD_URL='.$data->uploadUrl);
+        putenv('TEST_ESIGN_FILE_ID=' . $data->fileId);
+        putenv('TEST_ESIGN_FILE_UPLOAD_URL=' . $data->uploadUrl);
     }
-    
+
     public function testCreateSignFlow()
     {
         $response = app(TestHelpers::class)
@@ -60,12 +60,12 @@ class SignFlowTest extends TestCase
             ->createSignFlow(
                 '测试电子合同'
             );
-        
+
         $data = $response->data;
 
         $this->assertObjectHasAttribute('flowId', $data);
 
-        putenv('TEST_ESIGN_FLOW_ID='.$data->flowId);
+        putenv('TEST_ESIGN_FLOW_ID=' . $data->flowId);
     }
 
     public function testAddDocuments()
@@ -80,5 +80,4 @@ class SignFlowTest extends TestCase
 
         $this->assertEquals(0, $response->code);
     }
-    
 }

@@ -40,7 +40,7 @@ class Token implements Auth
             $uri,
             $this->secret
         );
-        
+
         return array_merge($signatureHeaders, $headers);
     }
 }
