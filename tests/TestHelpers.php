@@ -20,6 +20,6 @@ class TestHelpers extends TestCase
      */
     public function esign(): Esign
     {
-        return new Esign(env('ESIGN_APPID'), env('ESIGN_SECRET'));
+        return new Esign();
     }
 }

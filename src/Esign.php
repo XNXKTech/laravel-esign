@@ -18,9 +18,9 @@ class Esign
     protected Adapter $adapter;
     private Token $token;
 
-    public function __construct(string $appId, string $secret)
+    public function __construct(?string $appId = null, ?string $secret = null)
     {
-        $token = new Token($appId, $secret);
+        $token = $appId && $secret ? new Token($appId, $secret) : new Token(env('ESIGN_APPID'), env('ESIGN_SECRET'));
         $this->adapter = new Adapter($token);
     }
 
