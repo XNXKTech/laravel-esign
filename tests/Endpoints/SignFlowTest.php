@@ -108,10 +108,10 @@ class SignFlowTest extends TestCase
                             'posPage' => '1',
                             'posX' => '100.00',
                             'posY' => '100.00',
-                            'addSignTime' => true
+                            'addSignTime' => true,
                         ],
-                        'thirdOrderNo' => 'd39f333c-9d1b-4786-a501-544ca8112361'
-                    ]
+                        'thirdOrderNo' => 'd39f333c-9d1b-4786-a501-544ca8112361',
+                    ],
                 ]
             );
 
@@ -132,18 +132,18 @@ class SignFlowTest extends TestCase
                             'posPage' => '1',
                             'posX' => '100.00',
                             'posY' => '100.00',
-                            'addSignTime' => true
+                            'addSignTime' => true,
                         ],
-                        'thirdOrderNo' => 'd39f333c-9d1b-4786-a501-544ca8112361'
-                    ]
+                        'thirdOrderNo' => 'd39f333c-9d1b-4786-a501-544ca8112361',
+                    ],
                 ]
             );
 
         $data = $response->data;
-        
+
         $this->assertObjectHasAttribute('signfieldBeans', $data);
     }
-    
+
     public function testStartSignFlow()
     {
         $response = app(TestHelpers::class)
@@ -155,7 +155,7 @@ class SignFlowTest extends TestCase
 
         $this->assertEquals(0, $response->code);
     }
-    
+
     public function testGetExecuteUrl()
     {
         $response = app(TestHelpers::class)
@@ -171,10 +171,9 @@ class SignFlowTest extends TestCase
         $this->assertObjectHasAttribute('url', $data);
         $this->assertObjectHasAttribute('shortUrl', $data);
     }
-    
+
     public function testGetSignFlowStatus()
     {
-
         $response = app(TestHelpers::class)
             ->esign()
             ->signFlow()
@@ -210,7 +209,7 @@ class SignFlowTest extends TestCase
         $this->assertObjectHasAttribute('redirectUrl', $data->configInfo);
         $this->assertObjectHasAttribute('archiveLock', $data->configInfo);
     }
-    
+
     public function testRevoke()
     {
         $response = app(TestHelpers::class)
