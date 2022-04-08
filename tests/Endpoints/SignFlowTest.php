@@ -225,6 +225,30 @@ class SignFlowTest extends TestCase
         $this->assertObjectHasAttribute('archiveLock', $data->configInfo);
     }
 
+    public function testGetSignFlowSigners()
+    {
+        $response = app(TestHelpers::class)
+            ->esign()
+            ->signFlow()
+            ->getSignFlowSigners(
+                env('TEST_ESIGN_FLOW_ID')
+            );
+
+        $this->assertEquals(0, $response->code);
+    }
+
+    public function testRushSign()
+    {
+        $response = app(TestHelpers::class)
+            ->esign()
+            ->signFlow()
+            ->rushSign(
+                env('TEST_ESIGN_FLOW_ID')
+            );
+
+        $this->assertEquals(0, $response->code);
+    }
+
     public function testRevoke()
     {
         $response = app(TestHelpers::class)

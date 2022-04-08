@@ -24,6 +24,8 @@ class SignFlow implements API
     public const SIGN_PROCESS_DOCUMENT = '/v1/signflows/%s/documents';                 // 流程文档下载
     public const SIGN_REVOKE = '/v1/signflows/%s/revoke';                              // 签署流程撤销
     public const SIGN_PROCESS_STATUS = '/v1/signflows/%s';                             // 签署流程状态查询
+    public const SIGN_SIGNERS = '/v1/signflows/%s/signers';                             // 流程签署人列表
+    public const SIGN_SIGNERS_RUSHSIGN = '/v1/signflows/%s/signers/rushsign';          // 流程签署人催签
 
     private Adapter $adapter;
 
@@ -278,4 +280,43 @@ class SignFlow implements API
 
         return $this->body;
     }
+
+    /**
+     * 流程签署人列表.
+     *
+     * @param  string  $flowId  流程id
+     */
+    public function getSignFlowSigners(string $flowId)
+    {
+        $url = sprintf(self::SIGN_SIGNERS, $flowId);
+
+        $response = $this->adapter->get($url);
+
+        $this->body = json_decode((string) $response->getBody());
+
+        return $this->body;
+    }
+
+    /**
+     * 流程签署人催签.
+     *
+     * @param  string  $flowId  流程id
+     */
+    public function rushSign(string $flowId, ?string $accountId = null, ?string $noticeTypes = null, ?string $rushsignAccountId = null)
+    {
+        $url = sprintf(self::SIGN_SIGNERS_RUSHSIGN, $flowId);
+        $params = [
+            'accountId' => $accountId,
+            'noticeTypes' => $noticeTypes,
+            'rushsignAccountId' => $rushsignAccountId,
+        ];
+
+        $response = $this->adapter->put($url, $params);
+
+        $this->body = json_decode((string) $response->getBody());
+
+        return $this->body;
+    }
+    
+    
 }
