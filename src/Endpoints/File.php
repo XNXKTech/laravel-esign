@@ -288,9 +288,9 @@ class File implements API
     public function searchWordsPosition(string $fileId, string $keywords)
     {
         $url = sprintf(self::SEARCH_WORDS_POSITION, $fileId);
-        
+
         $params = [
-            'keywords' => $keywords
+            'keywords' => $keywords,
         ];
 
         $response = $this->adapter->get($url, $params);
