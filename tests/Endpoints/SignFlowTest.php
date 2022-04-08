@@ -64,6 +64,21 @@ class SignFlowTest extends TestCase
         putenv('TEST_ESIGN_FILE_UPLOAD_URL=' . $data->uploadUrl);
     }
 
+    public function testSearchWordsPosition()
+    {
+        $response = app(TestHelpers::class)
+            ->esign()
+            ->file()
+            ->searchWordsPosition(
+                env('TEST_ESIGN_FILE_ID'),
+                '甲方（签字）:,乙方（签字）:'
+            );
+
+        $data = $response->data;
+
+        $this->assertIsArray($data);
+    }
+
     public function testCreateSignFlow()
     {
         $response = app(TestHelpers::class)

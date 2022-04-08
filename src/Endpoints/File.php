@@ -20,6 +20,7 @@ class File implements API
     public const CREATE_TEMPLATE = '/v1/files/createByTemplate';                           // 通过模板创建文件
     public const QUERY_FILE = '/v1/files/%s';                                              // 查询文件详情/下载文件
     public const ADD_WATERMARK = '/v1/files/batchAddWatermark';                            // 文件添加数字水印
+    public const SEARCH_WORDS_POSITION = '/v1/documents/%s/searchWordsPosition';           // 搜索关键字坐标
 
     private Adapter $adapter;
 
@@ -272,6 +273,27 @@ class File implements API
         ];
 
         $response = $this->adapter->post(self::ADD_WATERMARK, $params);
+
+        $this->body = json_decode((string) $response->getBody());
+
+        return $this->body;
+    }
+
+    /**
+     * 搜索关键字坐标.
+     *
+     * @param  string  $fileId  文档ID
+     * @param  string  $keywords  关键字列表，逗号分割；注意要英文的逗号，不能中文逗号；关键字建议不要设置特殊字符，因Adobe无法识别部分符号，某些特殊字符会因解析失败从而导致搜索不到。
+     */
+    public function searchWordsPosition(string $fileId, string $keywords)
+    {
+        $url = sprintf(self::SEARCH_WORDS_POSITION, $fileId);
+        
+        $params = [
+            'keywords' => $keywords
+        ];
+
+        $response = $this->adapter->get($url, $params);
 
         $this->body = json_decode((string) $response->getBody());
 
