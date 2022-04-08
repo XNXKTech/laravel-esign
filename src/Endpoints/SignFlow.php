@@ -317,6 +317,4 @@ class SignFlow implements API
 
         return $this->body;
     }
-    
-    
 }
