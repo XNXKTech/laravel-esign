@@ -18,7 +18,7 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
         $config = config('esign');
 
         $this->app->bind(Esign::class, static function () use ($config) {
-            return new Esign($config);
+            return new Esign($config['app_id'] ?? null, $config['secret'] ?? null);
         });
 
         $this->app->alias(Esign::class, 'esign');
