@@ -21,7 +21,7 @@ class Esign
     public function __construct(?string $appId = null, ?string $secret = null)
     {
         $token = $appId && $secret ? new Token($appId, $secret) : new Token(getenv('ESIGN_APPID'), getenv('ESIGN_SECRET'));
-        $this->adapter = new Adapter($token);
+        $this->adapter = new Adapter($token, getenv('ESIGN_SERVER'));
     }
 
     public function account(): Account
