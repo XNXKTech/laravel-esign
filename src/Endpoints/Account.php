@@ -160,7 +160,7 @@ class Account implements API
     {
         $url = sprintf(self::ACCOUNT_BY_ID, $accountId);
 
-        $response = $this->adapter->get($url);
+        $response = $this->adapter->delete($url);
 
         $this->body = json_decode((string) $response->getBody());
 
