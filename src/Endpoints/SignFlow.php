@@ -64,7 +64,7 @@ class SignFlow implements API
      * @param bool $autoArchive 是否自动归档
      * @return mixed
      */
-    public function createSignFlow(string $businessScene, ?array $configInfo = [], bool $autoArchive = true)
+    public function createSignFlow(string $businessScene, ?array $configInfo = null, bool $autoArchive = true)
     {
         $params = [
             'autoArchive' => $autoArchive,
