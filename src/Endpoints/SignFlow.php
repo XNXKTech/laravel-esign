@@ -60,18 +60,16 @@ class SignFlow implements API
      * 签署流程创建.
      *
      * @param string $businessScene 文件主题
-     * @param string|null $noticeDeveloperUrl 回调通知地址
+     * @param array|null $configInfo
      * @param bool $autoArchive 是否自动归档
      * @return mixed
      */
-    public function createSignFlow(string $businessScene, ?string $noticeDeveloperUrl = null, bool $autoArchive = true)
+    public function createSignFlow(string $businessScene, ?array $configInfo = null, bool $autoArchive = true)
     {
         $params = [
             'autoArchive' => $autoArchive,
             'businessScene' => $businessScene,
-            'configInfo' => [
-                'noticeDeveloperUrl' => $noticeDeveloperUrl,
-            ],
+            'configInfo' => $configInfo
         ];
 
         $response = $this->adapter->post(self::CREATE_SIGN_PROCESS, $params);
