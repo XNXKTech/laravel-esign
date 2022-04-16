@@ -69,7 +69,7 @@ class SignFlow implements API
         $params = [
             'autoArchive' => $autoArchive,
             'businessScene' => $businessScene,
-            'configInfo' => $configInfo
+            'configInfo' => $configInfo,
         ];
 
         $response = $this->adapter->post(self::CREATE_SIGN_PROCESS, $params);
